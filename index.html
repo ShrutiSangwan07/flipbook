@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flip Book</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1"/>
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,400|Dancing+Script:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Animated Background Elements (Sparkles) -->
+  <div class="bg-animation-container" id="bgAnimation"></div>
+
+  <!-- Background Music Sound (autoplay, unmuted)-->
+  <audio id="bgMusic" preload="auto" loop autoplay>
+    <source src="spotifydown.com - Dheere Dheere Se.mp3" type="audio/mpeg">
+    <!-- fallback: no bg music -->
+  </audio>
+  <div class="book-container">
+    <div class="flip-book" id="flipBook"></div>
+    <div class="navigation">
+      <button class="nav-btn" id="prevBtn">&larr; Prev</button>
+      <button class="nav-btn" id="nextBtn">Next &rarr;</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+
+   
+</body>
+</html>
