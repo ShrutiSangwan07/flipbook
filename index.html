@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>For Lucky</title>
+  <title>For You</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,400|Dancing+Script:400,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -11,16 +11,35 @@
   <!-- Very faint background hearts -->
   <div class="bg-animation-container" id="bgAnimation" aria-hidden="true"></div>
 
-  <!-- Background Music Sound (autoplay, unmuted)-->
-  <audio id="bgMusic" preload="auto" loop autoplay>
-    <source src="spotifydown.com - Dheere Dheere Se.mp3" type="audio/mpeg">
-    <!-- fallback: no bg music -->
+  <!-- Background song. No autoplay attribute: phones only allow sound after a tap,
+       so the song and the book both start from the "Open your birthday book" button. -->
+  <audio id="bgMusic" preload="auto">
+    <source src="spotifydown.com%20-%20Dheere%20Dheere%20Se.mp3" type="audio/mpeg">
   </audio>
-  <div class="book-container">
+
+  <!-- Opening screen: one tap starts the song and the book together -->
+  <div class="start-screen" id="startScreen" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+    <div class="start-card">
+      <p class="start-title" id="startTitle">For Lucky</p>
+      <p class="start-sub">A small birthday book, with a song to read it by.</p>
+      <button class="nav-btn start-btn" id="startBtn" type="button">Open your birthday book</button>
+      <p class="start-hint">Sound on, if you can.</p>
+    </div>
+  </div>
+
+  <div class="book-container" id="bookArea">
     <div class="flip-book" id="flipBook"></div>
     <div class="navigation">
-      <button class="nav-btn" id="prevBtn" aria-label="Previous page">&larr; Prev</button>
-      <button class="nav-btn" id="nextBtn" aria-label="Next page">Next &rarr;</button>
+      <button class="nav-btn" id="prevBtn" type="button" aria-label="Previous page">&larr; Prev</button>
+      <button class="pause-btn" id="pauseBtn" type="button" aria-pressed="false" aria-label="Pause reading">
+        <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+      </button>
+      <button class="nav-btn" id="nextBtn" type="button" aria-label="Next page">Next &rarr;</button>
+    </div>
+    <div class="status-row" aria-live="polite">
+      <span class="pause-note" id="pauseNote" hidden>Paused — take your time</span>
+      <button class="song-btn" id="songBtn" type="button" hidden>&#9834; Start the song</button>
     </div>
   </div>
   <script src="script.js"></script>
