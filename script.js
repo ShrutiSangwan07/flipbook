@@ -17,7 +17,7 @@ for (let i = 0; i < 6; ++i) bgParent.appendChild(createBgHeart(i));
 
 // --- The book: each page is its lines (split by \n) | a small handwritten note ---
 const romanticPages = [
-  "Happy Birthday, Lucky.\n30 October|A small book, made just for you.",
+  "Happy Birthday, Love.\n|A small book, made just for you.",
 
   "I build things for a living.\nSo when I wanted to tell you what you mean to me,\nI built you this.\nIt isn’t perfect, and I’m not always good with words.\nBut every line in here is meant.|Take your time with it.",
 
@@ -43,11 +43,11 @@ const romanticPages = [
 
   "In the pages of my life, you are my favorite chapter.\nI want to keep writing it with you.\nNot perfectly, but honestly.\nThrough the busy weeks, the long days,\nand the good ones we haven’t lived yet.|When I follow my heart, it leads me to you.",
 
-  "Lucky, it’s your birthday.\nI hope this year is kind to you.\nI hope the things you want keep coming closer.\nI hope you feel celebrated today,\nand on every ordinary day after it.|Wishing you the very best on the 30th of October.",
+  "Lucky, it’s your birthday.\nI hope this year is kind to you.\nI hope the things you want keep coming closer.\nI hope you feel celebrated today,\nand on every ordinary day after it.|Wishing you the very best today and always.",
 
   "Whatever I get wrong along the way,\nI want you to be sure of this.\nI choose you.\nI loved you yesterday, I love you today,\nand tomorrow I’ll choose you again.|That part never changes.",
 
-  "Happy Birthday, my Lucky.\nHere’s to another year of us.|Yours, always."
+  "Happy Birthday, Love.\nHere’s to another year of us.|Yours, always."
 ];
 const TOTAL = romanticPages.length;
 
