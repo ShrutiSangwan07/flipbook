@@ -7,13 +7,15 @@
   --accent: #a45a6f;
   --quote: #8a4558;
   --shadow: rgba(74, 44, 54, 0.22);
-  --pad: clamp(22px, 6vw, 38px);
+  --pad: clamp(20px, 6vw, 38px);
 }
 
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
+
+[hidden] { display: none !important; }
 
 html, body {
   margin: 0;
@@ -54,26 +56,63 @@ body {
   animation: drift linear infinite;
   will-change: transform;
 }
-.bg-heart2 {
-  width: 26px;
-  height: 23px;
-  opacity: 0.07;
-}
+.bg-heart2 { width: 26px; height: 23px; opacity: 0.07; }
 @keyframes drift {
   from { transform: translateY(105vh) rotate(-8deg); }
   to   { transform: translateY(-12vh) rotate(8deg); }
 }
+
+/* Opening screen */
+.start-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+.start-screen.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.start-card { max-width: 340px; }
+.start-title {
+  margin: 0 0 0.3em;
+  font-size: clamp(2rem, 9vw, 2.6rem);
+  font-weight: 700;
+}
+.start-sub {
+  margin: 0 0 2em;
+  font-family: 'Dancing Script', cursive, 'Playfair Display', serif;
+  font-size: 1.35rem;
+  line-height: 1.4;
+  color: var(--quote);
+}
+.start-hint {
+  margin: 1.4em 0 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  opacity: 0.7;
+}
+.nav-btn.start-btn {
+  background: var(--accent);
+  color: #fff;
+  min-width: 230px;
+}
+.nav-btn.start-btn:hover:not(:disabled) { background: var(--quote); }
+.nav-btn.start-btn:disabled { opacity: 0.7; cursor: default; }
 
 /* Book */
 .book-container {
   position: relative;
   z-index: 1;
   width: min(92vw, 440px);
-  height: min(90vh, 680px);
-  height: min(90dvh, 680px);
+  height: min(92vh, 700px);
+  height: min(92dvh, 700px);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
 .flip-book {
@@ -81,6 +120,7 @@ body {
   flex: 1 1 auto;
   min-height: 0;
   perspective: 1600px;
+  touch-action: pan-y; /* we handle horizontal swipes ourselves */
 }
 
 .page {
@@ -94,16 +134,18 @@ body {
   border-radius: 4px 10px 10px 4px;
   box-shadow: inset 4px 0 8px rgba(120, 80, 60, 0.12);
   color: var(--ink);
-  font-size: clamp(1.05rem, 4.4vw, 1.3rem);
-  line-height: 1.7;
+  font-size: clamp(1.02rem, 4.2vw, 1.25rem);
+  line-height: 1.55;
   letter-spacing: 0.01em;
   transform-origin: left center;
   transition: transform 0.9s cubic-bezier(0.6, 0, 0.3, 1);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   cursor: pointer;
+  /* only the reading area: no selection / long-press menu while holding to read */
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
   overflow: auto;
   scrollbar-width: none;
   overflow-wrap: break-word;
@@ -116,19 +158,21 @@ body {
 }
 
 .page-text { margin: 0; }
+.page-text .line { display: block; margin: 0 0 0.5em; }
+.page-text .line:last-child { margin-bottom: 0; }
 
 .love-quote {
   font-family: 'Dancing Script', cursive, 'Playfair Display', serif;
   font-size: 1.15em;
   line-height: 1.4;
-  margin: 1.5em 0 0 0;
+  margin: 1.2em 0 0 0;
   color: var(--quote);
   text-align: right;
 }
 
 .page .page-number {
   position: absolute;
-  bottom: 14px;
+  bottom: 12px;
   right: 22px;
   font-size: 0.78rem;
   font-style: italic;
@@ -138,7 +182,7 @@ body {
 
 .heart {
   position: absolute;
-  top: 16px;
+  top: 14px;
   left: calc(var(--pad) + 6px);
   width: 20px;
   height: 18px;
@@ -149,20 +193,21 @@ body {
 
 /* Cover and closing page */
 .page.cover, .page.finale { align-items: center; text-align: center; }
-.page.cover .page-text { font-size: 1.55em; line-height: 1.35; font-weight: 700; }
-.page.finale .page-text { font-size: 1.45em; line-height: 1.4; font-weight: 700; }
+.page.cover .page-text { font-size: 1.5em; line-height: 1.35; font-weight: 700; }
+.page.finale .page-text { font-size: 1.35em; line-height: 1.4; font-weight: 700; }
 .page.cover .love-quote, .page.finale .love-quote { text-align: center; }
 
 /* Navigation */
 .navigation {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  align-items: center;
+  gap: 12px;
 }
 .nav-btn {
-  min-width: 104px;
+  min-width: 100px;
   min-height: 44px;
-  padding: 10px 22px;
+  padding: 10px 20px;
   background: transparent;
   color: var(--accent);
   border: 1px solid var(--accent);
@@ -178,18 +223,84 @@ body {
   background: var(--accent);
   color: #fff;
 }
-.nav-btn:focus-visible { outline: 2px solid var(--quote); outline-offset: 2px; }
 .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
+.pause-btn {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.2s, color 0.2s;
+}
+.pause-btn svg { width: 18px; height: 18px; fill: currentColor; }
+.pause-btn .icon-play { display: none; }
+.pause-btn[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.pause-btn[aria-pressed="true"] .icon-pause { display: none; }
+.pause-btn[aria-pressed="true"] .icon-play { display: block; }
+
+.nav-btn:focus-visible, .pause-btn:focus-visible, .song-btn:focus-visible {
+  outline: 2px solid var(--quote);
+  outline-offset: 2px;
+}
+
+/* Status line: paused note and song fallback */
+.status-row {
+  min-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+}
+.pause-note {
+  font-style: italic;
+  color: var(--quote);
+  animation: fadeIn 0.3s ease;
+}
+.song-btn {
+  min-height: 32px;
+  padding: 4px 10px;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Shorter phones */
+@media (max-height: 700px) {
+  .page { font-size: 1rem; line-height: 1.45; padding-top: 22px; padding-bottom: 30px; }
+  .page-text .line { margin-bottom: 0.38em; }
+  .love-quote { margin-top: 0.9em; }
+  .heart { top: 10px; }
+}
 /* Short landscape screens */
 @media (max-height: 520px) {
-  .book-container { height: 96vh; height: 96dvh; gap: 8px; }
-  .page { font-size: 1rem; line-height: 1.5; padding-top: 18px; padding-bottom: 28px; }
-  .love-quote { margin-top: 0.7em; }
-  .nav-btn { min-height: 38px; padding: 6px 18px; }
+  .book-container { height: 98vh; height: 98dvh; gap: 6px; }
+  .page { font-size: 0.92rem; line-height: 1.4; padding-top: 14px; padding-bottom: 24px; }
+  .page-text .line { margin-bottom: 0.25em; }
+  .love-quote { margin-top: 0.6em; }
+  .nav-btn { min-height: 38px; padding: 6px 16px; }
+  .pause-btn { width: 38px; height: 38px; }
+  .status-row { min-height: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .bg-heart { animation: none; display: none; }
   .page { transition-duration: 0.01s; }
+  .start-screen { transition-duration: 0.01s; }
 }
